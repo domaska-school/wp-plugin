@@ -22,11 +22,15 @@ html {
 	overflow-y: initial !important;
 }
 
-.inline-block {
-	display: inline-block;
-	box-sizing: border-box;
+* {
+	&,
+	&::befopre,
+	&::after {
+		box-sizing: border-box;
+	}
 }
 
+// Выравнивание текста
 .text {
 	&-center {
 		text-align: center;
@@ -36,6 +40,42 @@ html {
 	}
 	&-left {
 		text-align: left;
+	}
+}
+
+// Инлайновые блоки
+.inline {
+	&-block {
+		display: inline-block;
+	}
+	&-flex {
+		display: inline-flex;
+	}
+	&-table {
+		display: inline-table;
+	}
+	&-grid {
+		display: inline-grid;
+	}
+	display: inline;
+}
+
+// блоки
+.display {
+	&-block {
+		display: block;
+	}
+	&-flex {
+		display: flex;
+	}
+	&-table {
+		display: table;
+	}
+	&-grid {
+		display: grid;
+	}
+	&-inline {
+		.inline();
 	}
 }
 
@@ -115,4 +155,34 @@ html {
 
 	}
 
+}
+
+body .bvi-body[data-bvi-builtelements=true]:not(.bvi-no-styles) {
+	figure.wp-block {
+		&-gallery {
+			&,
+			&.has-nested-images figure.wp-block-image {
+				display: flex !important;
+			}
+		}
+	}
+}
+// grayscale
+body .bvi-body[data-bvi-images=grayscale]:not(.bvi-no-styles) img:not(.bvi-no-styles),
+body .bvi-body[data-bvi-images=grayscale]:not(.bvi-no-styles) .fancybox-thumbs__list a {
+	-moz-filter: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='grayscale'><feColorMatrix type='matrix' values='0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0'/></filter></svg>#grayscale");
+	-o-filter: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='grayscale'><feColorMatrix type='matrix' values='0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0'/></filter></svg>#grayscale");
+	-webkit-filter: grayscale(1);
+	filter: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='grayscale'><feColorMatrix type='matrix' values='1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0'/></filter></svg>#grayscale");
+	filter: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='grayscale'><feColorMatrix type='saturate' values='0'/></filter></svg>#grayscale");
+	filter: grayscale(1);
+	visibility: visible
+}
+
+.breadcrumbs {
+	font-size: 1.5em;
+	span[property="name"] {
+		display: inline-block;
+		width: auto;
+	}
 }

@@ -25,9 +25,34 @@ class WpRunClass {
 		add_action( 'template_redirect', array(__CLASS__, 'redirect_attachment_page') );
 		// add_filter( 'wp_default_editor', array(__CLASS__, 'wp_default_editor_filter') );
 		add_shortcode( 'author', '__return_false' );
+		add_filter( 'the_content', array(__CLASS__, 'author'), 25 );
+		add_shortcode('child', array(__CLASS__, 'child'));
+		add_shortcode('childs', array(__CLASS__, 'child'));
 
 	}
+
+	static function author($content) {
+		switch (get_post_type()) {
+			case "post":
+				return $content . '<p><strong class="text-right display-block"><em rel="author">' . get_the_author_meta("display_name", 1) . '</em></strong></p>';
+				break;
+			default:
+				return $content;
+				break;
+		}
+	}
 	
+	static function child(){
+		global $post;
+		if( $post->post_parent ){
+			$children = wp_list_pages( "title_li=&child_of=" . $post->post_parent . "&echo=0&sort_column=menu_order&sort_order=ASC" );
+		}
+		else {
+			$children = wp_list_pages( "title_li=&child_of=" . $post->ID . "&echo=0&sort_column=menu_order&sort_order=ASC" );
+		}
+		return ($children ? "<ul>" . $children . "</ul>" : "");
+	}
+
 	static function redirect_attachment_page(){
 		if ( is_attachment() ):
 			global $post;

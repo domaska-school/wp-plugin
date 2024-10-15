@@ -17,3 +17,10 @@
   margin-right: -12px;
   margin-bottom: 12px;
 }
+
+body.block-editor-page .editor-post-title__block,
+body.block-editor-page .editor-default-block-appender,
+body.block-editor-page .editor-block-list__block,
+.wp-block {
+  max-width: 100% !important;
+}

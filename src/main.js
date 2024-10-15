@@ -2,6 +2,7 @@
 	RegExp.escape = function(string) {
 		return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
 	};
+	$("body").append('<div class="fancybox-app-viewer"></div>');
 	/**
 	 * Дефолтные настройки Fancybox
 	 * Добавляем Русский язык
@@ -22,6 +23,11 @@
 	$.fancybox.defaults.transitionEffect = "circular";
 	$.fancybox.defaults.transitionDuration = 500;
 	$.fancybox.defaults.lang = "ru";
+	$.fancybox.defaults.parentEl = ".fancybox-app-viewer";
+	$.fancybox.defaults.beforeShow = function (instance, current) {
+		//console.log(instance, current);
+		//$(current.)
+	}
 	/**
 	 * Клик на ссылках документов
 	 * pdf, xlsx
