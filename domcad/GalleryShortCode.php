@@ -21,6 +21,12 @@ class GalleryShortCode {
 		add_filter( 'post_gallery',              array(__CLASS__, 'gallery_function'   ), 10, 2 );
 		
 		add_action( 'wp_head', array( __CLASS__, 'ps_gallery_function' ) );
+		/**
+		 ** Добавляем свои шоткоды галерей
+		 ** Данный функционал только для примера или на всякий случай
+		**/
+		add_shortcode( 'domashka_gallery',       array(__CLASS__, 'ps_gallery_function') );
+		add_shortcode( 'domcad_gallery',         array(__CLASS__, 'ps_gallery_function') );
 	}
 	
 	static function disable_srcset( $sources ) {

@@ -23,8 +23,9 @@ class WpRunClass {
 		// Отключаем RSS комментариев
 		add_filter( 'feed_links_show_comments_feed', '__return_false' );
 		add_action( 'template_redirect', array(__CLASS__, 'redirect_attachment_page') );
+		// add_filter( 'wp_default_editor', array(__CLASS__, 'wp_default_editor_filter') );
+		add_shortcode( 'author', '__return_false' );
 
-		add_filter( 'wp_default_editor', array(__CLASS__, 'wp_default_editor_filter') );
 	}
 	
 	static function redirect_attachment_page(){

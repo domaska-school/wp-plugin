@@ -98,8 +98,8 @@ function run_domcad() {
 
 	//
 	add_action( 'wp', function(){
-		remove_action('wp_head', 'parent_post_rel_link', 10, 0); // prev link
-		remove_action('wp_head', 'start_post_rel_link', 10, 0); // start link
+		//remove_action('wp_head', 'parent_post_rel_link', 10, 0); // prev link
+		//remove_action('wp_head', 'start_post_rel_link', 10, 0); // start link
 		remove_action('wp_head', 'wp_generator');
 		remove_action('wp_head', 'feed_links_extra', 3);
 		// remove_action('wp_head', 'feed_links', 2);
