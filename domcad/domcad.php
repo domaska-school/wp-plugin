@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'DOMCAD_VERSION', '1.0.0' );
+define( 'DOMCAD_VERSION', '1.1.0' );
 
 /**
  * The code that runs during plugin activation.
@@ -132,6 +132,7 @@ function run_domcad() {
 	require_once(dirname(__FILE__) . '/VideoShortCode.php');
 	require_once(dirname(__FILE__) . '/WpEmbededRun.php');
 	require_once(dirname(__FILE__) . '/WpBashBoardWidgets.php');
+	require_once(dirname(__FILE__) . '/DisabledEmoji.php');
 	
 }
 
