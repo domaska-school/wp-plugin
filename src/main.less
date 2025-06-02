@@ -1,5 +1,9 @@
 @charset "utf-8";
 
+// @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+// @import (css) url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+@import "noto_color_emoji.less";
+
 :root {
 	--gallery-gap: 15px;
 	//--gallery-column: calc(100% / 4);
@@ -21,6 +25,11 @@
 html {
 	overflow-y: initial !important;
 }
+
+html, body {
+	font-family: "Lato", "Noto Color Emoji", "Tofu", sans-serif;
+}
+
 
 * {
 	&,
