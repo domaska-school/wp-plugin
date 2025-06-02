@@ -1,5 +1,6 @@
 *-lock.json
 *.sublime-workspace
+*.zip
 bower_components
 node_modules
 test

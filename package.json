@@ -1,11 +1,12 @@
 {
-	"name": "wp-podbelsk",
-	"version": "1.0.0",
+	"name": "domcat",
+	"version": "1.1.0",
 	"description": "Не нужно думать зачем.",
 	"main": "Gruntfile.js",
 	"scripts": {
+		"inst": "npm i && npm i -g bower && bower install",
 		"build": "grunt -v",
-		"preinstall": "bower install",
+		"preinstall": "npm i -g less grunt-cli",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "ProjectSoft <projectsoft2009@yandex.ru>",
