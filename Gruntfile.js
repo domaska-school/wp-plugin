@@ -9,6 +9,7 @@ module.exports = function(grunt) {
 				"autoprefixer",
 				"group_css_media_queries",
 				"cssmin",
+				"compress"
 			]
 		};
 
@@ -33,6 +34,7 @@ module.exports = function(grunt) {
 			},
 			appjs: {
 				src: [
+					'bower_components/js-cookie/src/js.cookie.js',
 					"bower_components/fancybox/src/js/core.js",
 					// обработка ссылок на видео
 					// YouTube, RUTUBE, Viemo
@@ -151,7 +153,24 @@ module.exports = function(grunt) {
 					'domcad/css/jquery.fancybox.min.css' : ['domcad/css/jquery.fancybox.css']
 				}
 			}
-		}
+		},
+		compress: {
+			main: {
+				options: {
+					archive: 'domcad.zip'
+				},
+				files: [
+					{
+						expand: true,
+						cwd: '.',
+						src: [
+							'domcad/**',
+						],
+						dest: ''
+					}
+				],
+			},
+		},
 	});
 	grunt.registerTask('default',	gc.default);
 };

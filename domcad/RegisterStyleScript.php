@@ -5,7 +5,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 class RegisterStyleScript {
 	static function init(){
-		add_action ( 'wp_enqueue_scripts', array(__CLASS__, 'add_theme_scripts') );
+		add_action ( 'wp_enqueue_scripts', array(__CLASS__, 'add_theme_scripts'), 100 );
 		add_action ( 'admin_print_footer_scripts', array(__CLASS__, 'load_admin_style') );
 		//add_action ( 'get_footer', array(__CLASS__, 'add_footer_styles') );
 	}

@@ -36,20 +36,24 @@
 		let target = e.target.nodeName == "A" ? $(e.target) : $(e.target).closest('a'),
 			base = window.location.origin + '/',
 			reg = new RegExp("^" + base),
-			href, arr, ext, options, url;
+			href, arr, ext, url;
 		/**
 		 * Если существует
 		 */
 		if (target[0]) {
 			href = target[0].href;
+			arr = href.split('.');
+			ext = arr.at(-1).toLowerCase();
 			/**
 			 * Если проходит регулярку
 			 */
 			if(reg.test(href)){
-				arr = href.split('.');
-				ext = arr.at(-1).toLowerCase();
 				url = window.location.origin + `/viewer/${ext}_viewer/?file=` + encodeURI(href);
-				options = {
+				/**
+				 * Открываем fancybox
+				 */
+				e.preventDefault();
+				$.fancybox.open({
 					src: url,
 					toolbar: true,
 					smallBtn: false,
@@ -58,20 +62,32 @@
 					],
 					opts : {
 						afterShow : function( instance, current ) {
-							$('.fancybox-content').addClass(ext == "xlsx" ? 'xlsx_viewer' : 'docx_viewer')
+							$(".fancybox-content").css({
+								height: '100% !important',
+								overflow: 'hidden'
+							}).addClass(`${ext}_viewer`);
 						},
 						afterLoad : function( instance, current ) {
-							$('.fancybox-content').addClass(ext == "xlsx" ? 'xlsx_viewer' : 'docx_viewer')
+							$(".fancybox-content").css({
+								height: '100% !important',
+								overflow: 'hidden'
+							}).addClass(`${ext}_viewer`);
 						},
+						afterClose: function() {
+							Cookies.remove('pdfjs.history', { path: '' });
+							window.localStorage.removeItem('pdfjs.history');
+						}
 					}
-				};
-				console.log(options.src);
-				/**
-				 * Открываем fancybox
-				 */
-				e.preventDefault();
-				$.fancybox.open(options);
+				});
 				return !1;
+			}else if(ext=='pdf'){
+				/**
+				 * 
+				 * 
+				 * 
+				 * 
+				 * 
+				**/
 			}
 		}
 	})

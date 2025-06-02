@@ -24,6 +24,7 @@
 		"load-grunt-tasks": "^5.1.0"
 	},
 	"dependencies": {
+		"grunt-contrib-compress": "^2.0.0",
 		"less": "^4.2.0",
 		"less-plugin-autoprefix": "^2.0.0",
 		"less-plugin-clean-css": "^1.5.1"

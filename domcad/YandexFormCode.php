@@ -23,7 +23,7 @@ class YandexFormCode {
 			'id' => false,
 		), $atts ));
 		if($id) {
-			$frame = '<script src="https://yastatic.net/s3/frontend/forms/_/embed.js"></script><iframe src="https://forms.yandex.ru/u/' . $id . '/?iframe=1" frameborder="0" name="ya-form-' . $id . '" style="display: block; width: 100% !important;"></iframe>';
+			$frame = '<script src="https://yastatic.net/s3/frontend/forms/_/embed.js"></script><iframe src="https://forms.yandex.ru/u/' . $id . '/?iframe=1" frameborder="0" name="ya-form-' . $id . '" style="display: block; width: 100% !important;" class="yandex-form-embeded"></iframe>';
 			return $frame;
 		}
 		return "";
