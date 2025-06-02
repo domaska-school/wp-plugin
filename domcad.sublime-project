@@ -2,8 +2,16 @@
 	"folders":
 	[
 		{
-			"name": "Плагин WordPress для сайта школы с. Подбельск",
+			"name": "Плагин WordPress для сайта CП ДС ГБОУ СОШ с. Домашка",
 			"path": "."
+		}
+	],
+	"build_systems": [
+		{
+			"name": "Запуск полной сборки проекта",
+			"working_dir": "${project_path}",
+			"cmd": ["start", "/wait", "grunt", "-v", "default"],
+			"shell": true
 		}
 	]
 }

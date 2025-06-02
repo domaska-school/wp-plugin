@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://github.com/ProjectSoft-STUDIONIONS
- * @since             1.0.0
+ * @since             1.1.0
  * @package           domcad
  *
  * @wordpress-plugin
  * Plugin Name:       СП ДС ГБОУ СОШ с. Домашка
  * Plugin URI:        https://github.com/domaska-school/wp-plugin
  * Description:       Плагин для сайта Структурное подразделение детский сад ГБОУ СОШ с. Домашка
- * Version:           1.0.0
+ * Version:           1.1.0
  * Author:            ProjectSoft
  * Author URI:        https://github.com/ProjectSoft-STUDIONIONS/
  * License:           MIT
