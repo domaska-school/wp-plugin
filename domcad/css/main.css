@@ -336,11 +336,11 @@ body .bvi-body[data-bvi-images=grayscale]:not(.bvi-no-styles) .wp-block-video.em
 }
 
 body .bvi-body[data-bvi-fontfamily=arial]:not(i):not(span):not(.bvi-no-styles) {
-  font-family: Arial, "Noto Color Emoji", "Tofu", sans-serif !important;
+  font-family: Arial, "Noto Color Emoji", sans-serif !important;
 }
 
 body .bvi-body[data-bvi-fontfamily=times]:not(i):not(span):not(.bvi-no-styles) {
-  font-family: "Times New roman", "Noto Color Emoji", "Tofu", serif !important;
+  font-family: "Times New roman", "Noto Color Emoji", serif !important;
 }
 
 .breadcrumbs {
