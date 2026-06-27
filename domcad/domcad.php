@@ -117,7 +117,7 @@ function run_domcad() {
 		remove_filter('the_content_feed', 'wp_staticize_emoji');
 		remove_filter('comment_text_rss', 'wp_staticize_emoji');
 	});
-	add_filter( 'the_content_more_link', '__return_empty_string' );
+	
 	//
 	require_once(dirname(__FILE__) . '/Video.php');
 	require_once(dirname(__FILE__) . '/WpRunClass.php');
@@ -132,7 +132,7 @@ function run_domcad() {
 }
 
 run_domcad();
-
+add_filter( 'the_content_more_link', '__return_empty_string' );
 // Собственный RSS
 // add_action('init', 'customRSS');
 // function customRSS(){
