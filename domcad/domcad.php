@@ -119,6 +119,7 @@ function run_domcad() {
 	});
 	
 	//
+	require_once(dirname(__FILE__) . '/DomCad_Slider_Settings.php');
 	require_once(dirname(__FILE__) . '/Video.php');
 	require_once(dirname(__FILE__) . '/WpRunClass.php');
 	require_once(dirname(__FILE__) . '/RegisterStyleScript.php');

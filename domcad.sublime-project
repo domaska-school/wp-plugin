@@ -8,6 +8,12 @@
 	],
 	"build_systems": [
 		{
+			"name": "Запуск инсталяции npm",
+			"working_dir": "${project_path}",
+			"cmd": ["start", "/wait", "npm", "run", "inst"],
+			"shell": true
+		},
+		{
 			"name": "Запуск полной сборки проекта",
 			"working_dir": "${project_path}",
 			"cmd": ["start", "/wait", "grunt", "-v", "default"],

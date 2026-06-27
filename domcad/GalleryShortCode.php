@@ -27,6 +27,7 @@ class GalleryShortCode {
 		**/
 		add_shortcode( 'domashka_gallery',       array(__CLASS__, 'ps_gallery_function') );
 		add_shortcode( 'domcad_gallery',         array(__CLASS__, 'ps_gallery_function') );
+
 	}
 	
 	static function disable_srcset( $sources ) {
