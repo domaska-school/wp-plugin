@@ -54,6 +54,18 @@ module.exports = function(grunt) {
 				],
 				dest: 'domcad/js/main.js'
 			},
+			sortable: {
+				src: [
+					'src/sortable.js'
+				],
+				dest: 'domcad/js/sortable.js'
+			},
+			files: {
+				src: [
+					'src/file-ajax.js'
+				],
+				dest: 'domcad/js/file-ajax.js'
+			},
 			css: {
 				src: [
 					'bower_components/fancybox/src/css/*.css'
@@ -85,7 +97,20 @@ module.exports = function(grunt) {
 						rename: function (dst, src) {
 							return path.normalize(path.join(dst, src.replace('.js', '.min.js')));
 						}
-					}
+					},
+					/*{
+						expand: true,
+						flatten : true,
+						src: [
+							'src/sortable.js',
+							'src/file-ajax.js'
+						],
+						dest: path.normalize(path.join(__dirname, 'domcad', 'js')),
+						filter: 'isFile',
+						rename: function (dst, src) {
+							return path.normalize(path.join(dst, src.replace('.js', '.js')));
+						}
+					},*/
 				]
 			}
 		},

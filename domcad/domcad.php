@@ -82,6 +82,9 @@ function run_domcad() {
 		);
 		return implode( ' • ', $footer_text);
 	}
+
+	// Размер для слайдера 100x31
+	add_image_size( 'gallery_image', 1200, 372, true );
 	 
 	add_filter('admin_footer_text', 'domcad_admin_footer');
 
