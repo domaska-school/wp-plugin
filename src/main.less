@@ -254,3 +254,73 @@ img.emoji {
 	}
 }
 
+.carausel {
+	margin-bottom: 25px;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.28);
+	width: 100%;
+	overflow: hidden;
+	height: 0;
+	padding-bottom: 31%;
+	position: relative;
+}
+
+.slick {
+	&-slider {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		display: block;
+		&-item {
+			position: relative;
+			height: 0 !important;
+			padding-bottom: 31%;
+			overflow: hidden;
+			img {
+				display: none;
+				position: absolute;
+				z-index: 1;
+				max-width: 100%;
+				width: 100%;
+				pointer-events: none;
+				height: 100%;
+				object-fit: cover;
+				object-position: center;
+			}
+		}
+	}
+	&-initialized {
+		.slick {
+			&-slider {
+				&-item {
+					&, img {
+						display: block !important;
+					}
+				}
+			}
+		}
+	}
+
+	&-prev,
+	&-next {
+		z-index: 10;
+		border-radius: 50%;
+		text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+		top: 0;
+		bottom: 0;
+		height: 100%;
+		width: auto;
+		padding: 5px;
+		transform: translate(0, 0);
+		transition: text-shadow .3s ease, color .3s ease;
+		&:hover,
+		&:focus {
+			text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+		}
+	}
+	&-prev {
+		left: 0;
+	}
+	&-next {
+		right: 0;
+	}
+}

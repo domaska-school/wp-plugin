@@ -10,7 +10,3 @@ window.addEventListener("pagereveal", (event) => {
 		event.viewTransition.types.add( transitionType );
 	}
 });
-
-(function($){
-	console.log($);
-}(jQuery));

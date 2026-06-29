@@ -113,6 +113,20 @@
 			}
 		}
 	});
+	/**
+	 * Слайдер на главной
+	 */
+	$('.slick-slider.home').slick(
+		{
+			infinite: true,
+			slidesToScroll: 1,
+			slidesToShow: 1,
+			dots: false,
+			autoplay: true,
+			autoplaySpeed: sliderHome.speed,
+			arrows: true,
+		}
+	);
 	/*
 	$("#content article").each((index, element, array) => {
 		let id = $(element).attr("id");

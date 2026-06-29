@@ -35,12 +35,16 @@ class DomCad_Slider_Settings {
 	 * Добавление размера в выпадающий список выбора размера
 	 */
 	public function add_image_sizes( $sizes ) {
-		$sizes['gallery_image'] = __( 'Слайдер', 'domcad' );
+		$sizes['gallery_image'] = __( 'Slider', 'domcad' );
 		return $sizes;
 	}
 
 	/**
-	 * Регистрация опции domcad_slider_home
+	 * Регистрация опции
+	 * domcad_slider_home - изображения слайдера
+	 * 
+	 * Регистрация опции
+	 * domcad_slider_autoplay_speed - время между слайдерами
 	 */
 	public function register_setting() {
 		register_setting(
@@ -53,8 +57,25 @@ class DomCad_Slider_Settings {
 
 		add_settings_field(
 			'domcad_slider_home_field',
-			__( 'Слайдер на главной странице', 'domcad' ),
+			__( 'Slider on the main page', 'domcad' ),
 			array( $this, 'render_slider_field' ),
+			'general',
+			'default',
+			array()
+		);
+
+		register_setting(
+			'general',
+			'domcad_slider_autoplay_speed',
+			array(
+				'sanitize_callback' => array( $this, 'sanitize_slider_option_autoplay_speed' ),
+			)
+		);
+
+		add_settings_field(
+			'domcad_slider_autoplay_speed_field',
+			__( 'Time between slider animations', 'domcad' ),
+			array( $this, 'render_slider_autoplay_speed_field' ),
 			'general',
 			'default',
 			array()
@@ -62,7 +83,7 @@ class DomCad_Slider_Settings {
 	}
 
 	/**
-	 * Валидация значения
+	 * Валидация значения domcad_slider_home
 	 */
 	public function sanitize_slider_option( $input ) {
 		if ( empty( $input ) ) {
@@ -82,7 +103,21 @@ class DomCad_Slider_Settings {
 	}
 
 	/**
-	 * Вывод поля на странице настроек
+	 * Валидация значения domcad_slider_autoplay_speed
+	 */
+	public function sanitize_slider_option_autoplay_speed( $input ) {
+		if ( empty( $input ) ) {
+			return '';
+		}
+		$value = intval( trim( $input ), 10 );
+		if(!$value){
+			$value = 1;
+		}
+		return $value;
+	}
+
+	/**
+	 * Вывод поля domcad_slider_home
 	 */
 	public function render_slider_field() {
 		$ids      = get_option( 'domcad_slider_home', '' );
@@ -131,9 +166,23 @@ class DomCad_Slider_Settings {
 			</div>
 			<p>
 				<button type="button" id="domcad-gallery_btn" class="button button-secondary">
-					<?php _e( 'Выбрать изображения для слайдера', 'domcad'); ?>
+					<?= __( 'Select images for the Slider', 'domcad'); ?>
 				</button>
 			</p>
+			<p><?= __('Instructions on how to use', 'domcad');?>: <a href="https://github.com/domaska-school/wp-plugin#плагин-для-сайта" target="_blank">https://github.com/domaska-school/wp-plugin</a>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Вывод поля domcad_slider_autoplay_speed
+	 */
+	public function render_slider_autoplay_speed_field () {
+		$value = get_option( 'domcad_slider_autoplay_speed', '1' );
+		$value = $this->sanitize_slider_option_autoplay_speed($value);
+		?>
+		<div class="domcad-gallery-field-autoplay-speed">
+			<input type="number" id="domcad_slider_autoplay_speed" name="domcad_slider_autoplay_speed" value="<?php echo esc_attr( $value ); ?>" min="1" max="100" step="1"> <?= __('Seconds', 'domcad');?>
 		</div>
 		<?php
 	}
@@ -184,9 +233,9 @@ class DomCad_Slider_Settings {
 		);
 
 		$translation_array = array(
-			'title'   => __( 'Выберите изображение для Слайдера', 'domcad' ),
-			'insert'  => __( 'Использовать выбранные', 'domcad' ),
-			'noFiles' => __( 'Нет выбранных файлов', 'domcad' ),
+			'title'   => __( 'Select images for the Slider', 'domcad' ),
+			'insert'  => __( 'Use the selected ones', 'domcad' ),
+			'noFiles' => __( 'There are no selected files', 'domcad' ),
 		);
 
 		wp_localize_script( 'domcad-options', 'domcadTranslations', $translation_array );

@@ -5,8 +5,11 @@ if ( ! defined( 'WPINC' ) ) {
 
 class RegisterStyleScript {
 	static function init(){
-		add_action ( 'wp_enqueue_scripts', array(__CLASS__, 'add_theme_scripts'), 99999999 );
-		add_action ( 'admin_print_footer_scripts', array(__CLASS__, 'load_admin_style') );
+		if(!is_admin()) {
+			add_action ( 'wp_enqueue_scripts', array(__CLASS__, 'add_theme_scripts'), 99999999 );
+		} else {
+			add_action ( 'admin_print_footer_scripts', array(__CLASS__, 'load_admin_style') );
+		}
 		//add_action ( 'get_footer', array(__CLASS__, 'add_footer_styles') );
 	}
 	
@@ -39,6 +42,13 @@ class RegisterStyleScript {
 			array( 'jquery' ),
 			filemtime(dirname(__FILE__) . '/js/main.min.js'),
 			true
+		);
+		wp_add_inline_script(
+			'fancybox-main',
+			'const sliderHome = ' . json_encode(array(
+				"speed" => intval( trim( get_option( 'domcad_slider_autoplay_speed', '1' ) ) ) * 1000,
+			)) . ';',
+			'before'
 		);
 	}
 

@@ -34,9 +34,13 @@ class WpRunClass {
 		 */
 		add_action( 'graphene_top_content', array( __CLASS__, 'slider_function' ), 10, 2 );
 		/**
-		 * Или собственный для использования вдругих темах
+		 * Или собственный
 		 */
 		add_action( 'domcad_slider_content', array( __CLASS__, 'slider_function' ), 10, 2 );
+		/**
+		 * Здесь добавить action если он есть в другой теме
+		 */
+		// ........
 	}
 
 	static function author($content) {

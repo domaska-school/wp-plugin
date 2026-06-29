@@ -50,6 +50,7 @@ module.exports = function(grunt) {
 			},
 			main: {
 				src: [
+					'bower_components/slick-carousel/slick/slick.js',
 					'src/main.js'
 				],
 				dest: 'domcad/js/main.js'
@@ -126,9 +127,15 @@ module.exports = function(grunt) {
 				options : {
 					compress: false,
 					ieCompat: false,
+					modifyVars: {
+						"slick-font-path": "../fonts/",
+						"slick-loader-path": "../images/",
+					}
 				},
 				files : {
 					'test/css/main.css' : [
+						'bower_components/slick-carousel/slick/slick.less',
+						'bower_components/slick-carousel/slick/slick-theme.less',
 						'src/main.less'
 					],
 					'test/css/admin.css' : [
