@@ -45,23 +45,14 @@
 					});
 				});
 				frame.on('select', function() {
-					var selection = frame.state().get('selection').map(function(a) { return a; });
-					var current = $('#domcad_slider_home')
-						.val()
-						.split(',')
-						.filter(w => w.length > 0)
-						.map(Number);
-					var objs = [];
-					current = [];
-					// добавляем новые, не дублируя
-					selection.forEach(function(obj) {
-						if (current.indexOf(obj.id) === -1) {
-							current.push(obj.id);
-						}
-						objs.push(obj);
+					var selection = frame.state().get('selection').map(function(attachment) {
+						return attachment.toJSON();
 					});
-					$('#domcad_slider_home').val(current.join(','));
-					updatePreview(objs);
+					var ids = selection.map(function(img) {
+						return img.id;
+					}).join(',');
+					$('#domcad_slider_home').val(ids);
+					updatePreview(selection);
 				});
 			}
 			frame.open();
@@ -80,10 +71,32 @@
 			$tag.remove();
 		});
 		function updatePreview(objs) {
-			console.log(objs);
-			// можно сделать AJAX‑запрос к admin-ajax.php для получения HTML превью,
-			// либо просто перезагрузить страницу после сохранения.
-			//
+			var $container = $('#domcad-gallery-order');
+			$container.empty();
+
+			attachments.forEach(function(att) {
+				var $span = $('<span>')
+					.addClass('domcad-img-tag')
+					.attr('data-id', att.id);
+
+				if (att.sizes && att.sizes.thumbnail) {
+					$span.append(
+						$('<img>')
+							.attr('src', att.sizes.thumbnail.url)
+							.attr('alt', att.alt || 'Image')
+							.attr('title', att.id)
+					);
+				} else {
+					// запасной вариант, если миниатюры нет
+					$span.text(att.id);
+				}
+
+				$span.append(
+					$('<span>').addClass('domcad-remove-img').html('&times;')
+				);
+
+				$container.append($span);
+			});
 		}
 	});
 })(jQuery);
