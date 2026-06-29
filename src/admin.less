@@ -24,3 +24,45 @@ body.block-editor-page .editor-block-list__block,
 .wp-block {
 	max-width: 100% !important;
 }
+
+.domcad {
+	&-gallery {
+		&-field {
+			&-wrapper {
+				.domcad {
+					&-img {
+						&-tag {
+							display: inline-block;
+							margin: 4px;
+							border: 1px solid #ccc;
+							padding: 2px;
+							position: relative;
+							img {
+								width: 400px;
+								height: 124px;
+								display: block;
+								object-fit: cover;
+								object-position: 50% 50%;
+							}
+						}
+					}
+					&-remove {
+						&-img {
+							position: absolute;
+							top: -8px;
+							right: -8px;
+							background: #d93232;
+							color: #fff;
+							width: 16px;
+							height: 16px;
+							line-height: 16px;
+							text-align: center;
+							border-radius: 50%;
+							cursor: pointer;
+						}
+					}
+				}
+			}
+		}
+	}
+}

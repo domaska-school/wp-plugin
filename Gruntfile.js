@@ -66,6 +66,12 @@ module.exports = function(grunt) {
 				],
 				dest: 'domcad/js/file-ajax.js'
 			},
+			option: {
+				src: [
+					'src/options.js'
+				],
+				dest: 'domcad/js/options.js'
+			},
 			css: {
 				src: [
 					'bower_components/fancybox/src/css/*.css'
