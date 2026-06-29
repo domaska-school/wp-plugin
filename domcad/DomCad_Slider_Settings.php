@@ -151,27 +151,27 @@ class DomCad_Slider_Settings {
 		// Сортировка
 		wp_enqueue_script(
 			'domcad-file-sortable',
-			plugin_dir_url( __FILE__ ) . 'js/sortable.js',
+			plugin_dir_url( __FILE__ ) . 'js/sortable.min.js',
 			array(),
-			filemtime( plugin_dir_path( __FILE__ ) . 'js/sortable.js' ),
+			filemtime( plugin_dir_path( __FILE__ ) . 'js/sortable.min.js' ),
 			true
 		);
 
 		// Опции админки
 		wp_enqueue_script(
 			'domcad-options',
-			plugin_dir_url( __FILE__ ) . 'js/options.js',
-			array( 'jquery' ), // добавь сюда 'wp-media' или 'wp-i18n', если используешь в JS
-			filemtime( plugin_dir_path( __FILE__ ) . 'js/options.js' ),
+			plugin_dir_url( __FILE__ ) . 'js/options.min.js',
+			array( 'jquery' ),
+			filemtime( plugin_dir_path( __FILE__ ) . 'js/options.min.js' ),
 			true
 		);
 
 		// AJAX
 		wp_enqueue_script(
 			'domcad-file-ajax',
-			plugin_dir_url( __FILE__ ) . 'js/file-ajax.js',
+			plugin_dir_url( __FILE__ ) . 'js/file-ajax.min.js',
 			array( 'jquery' ),
-			filemtime( plugin_dir_path( __FILE__ ) . 'js/file-ajax.js' ),
+			filemtime( plugin_dir_path( __FILE__ ) . 'js/file-ajax.min.js' ),
 			true
 		);
 

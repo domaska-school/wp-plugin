@@ -40,8 +40,9 @@
 					var selection = frame.state().get('selection');
 					selectedIds.forEach(function(id) {
 						var attachment = wp.media.attachment(id);
-						attachment.fetch(); // загружаем данные вложения
-						selection.add(attachment ? [attachment] : []);
+						if (attachment && attachment.get('id')) {
+						    selection.add([attachment]);
+						}
 					});
 				});
 				frame.on('select', function() {
@@ -66,24 +67,24 @@
 				.split(',')
 				.filter(w => w.length > 0)
 				.map(Number);
-			current = current.filter( (x) => { x !== id });
+			current = current.filter( x => x !== id );
 			$('#domcad_slider_home').val(current.join(','));
 			$tag.remove();
 		});
-		function updatePreview(objs) {
+		function updatePreview(attachments) {
 			var $container = $('#domcad-gallery-order');
 			$container.empty();
-
 			attachments.forEach(function(att) {
 				var $span = $('<span>')
 					.addClass('domcad-img-tag')
 					.attr('data-id', att.id);
-
-				if (att.sizes && att.sizes.thumbnail) {
+				// Получаем миниатюры
+				if (att.sizes) {
+					let url = att.sizes.gallery_image ? att.sizes.gallery_image.url : att.sizes.full.url;
 					$span.append(
 						$('<img>')
-							.attr('src', att.sizes.thumbnail.url)
-							.attr('alt', att.alt || 'Image')
+							.attr('src', url)
+							.attr('alt', att.alt ? att.alt : att.id)
 							.attr('title', att.id)
 					);
 				} else {

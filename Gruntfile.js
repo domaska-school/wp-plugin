@@ -104,19 +104,20 @@ module.exports = function(grunt) {
 							return path.normalize(path.join(dst, src.replace('.js', '.min.js')));
 						}
 					},
-					/*{
+					{
 						expand: true,
 						flatten : true,
 						src: [
 							'src/sortable.js',
-							'src/file-ajax.js'
+							'src/file-ajax.js',
+							'src/options.js'
 						],
 						dest: path.normalize(path.join(__dirname, 'domcad', 'js')),
 						filter: 'isFile',
 						rename: function (dst, src) {
-							return path.normalize(path.join(dst, src.replace('.js', '.js')));
+							return path.normalize(path.join(dst, src.replace('.js', '.min.js')));
 						}
-					},*/
+					},
 				]
 			}
 		},
