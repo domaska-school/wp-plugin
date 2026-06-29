@@ -71,22 +71,21 @@ if ( ! function_exists( 'twentyfourteen_posted_on' ) ) :
 	}
 endif;
 
+function domcad_admin_footer ($text) {
+	$footer_text = array(
+		'GitHub:&nbsp;<a href="https://github.com/domaska-school/" target="_blank">https://github.com/domaska-school/</a>',
+		'Поддержка:&nbsp;<a href="https://github.com/ProjectSoft-STUDIONIONS" target="_blank">ProjectSoft</a>',
+		'Тел.:&nbsp;<a href="tel:+79376445464" target="_blank">+7(937)644-54-64</a>',
+		'Email:&nbsp;<a href="mailto:projectsoft2009@yandex.ru?subject=Проблемы с сайтом СП ДС ГБОУ СОШ с. Домашка">projectsoft2009@yandex.ru</a>'
+	);
+	return $text . implode( ' • ', $footer_text);
+}
+
+
 function run_domcad() {
 	load_plugin_textdomain( 'domcad', false, basename(dirname(__FILE__)).'/languages/' );
-	function domcad_admin_footer () {
-		$footer_text = array(
-			'GitHub:&nbsp;<a href="https://github.com/domaska-school/" target="_blank">https://github.com/domaska-school/</a>',
-			'Поддержка:&nbsp;<a href="https://github.com/ProjectSoft-STUDIONIONS" target="_blank">ProjectSoft</a>',
-			'Тел.:&nbsp;<a href="tel:+79376445464" target="_blank">+7(937)644-54-64</a>',
-			'Email:&nbsp;<a href="mailto:projectsoft2009@yandex.ru?subject=Проблемы с сайтом СП ДС ГБОУ СОШ с. Домашка">projectsoft2009@yandex.ru</a>'
-		);
-		return implode( ' • ', $footer_text);
-	}
-
 	// Размер для слайдера 100x31
 	add_image_size( 'gallery_image', 1200, 372, true );
-	 
-	add_filter('admin_footer_text', 'domcad_admin_footer');
 
 	//
 	remove_action( 'do_feed_rdf',  'do_feed_rdf',  10, 1 );
@@ -120,6 +119,7 @@ function run_domcad() {
 		remove_filter('the_content_feed', 'wp_staticize_emoji');
 		remove_filter('comment_text_rss', 'wp_staticize_emoji');
 	});
+	add_filter( 'the_content_more_link', '__return_empty_string' );
 	
 	//
 	require_once(dirname(__FILE__) . '/DomCad_Slider_Settings.php');
@@ -136,7 +136,9 @@ function run_domcad() {
 }
 
 run_domcad();
-add_filter( 'the_content_more_link', '__return_empty_string' );
+
+add_filter('admin_footer_text', 'domcad_admin_footer');
+
 // Собственный RSS
 // add_action('init', 'customRSS');
 // function customRSS(){
