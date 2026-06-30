@@ -18,6 +18,12 @@
 			"working_dir": "${project_path}",
 			"cmd": ["start", "/wait", "grunt", "-v", "default"],
 			"shell": true
+		},
+		{
+			"name": "Сгенерировать pot файл",
+			"working_dir": "${project_path}",
+			"cmd": ["npm", "run", "build:makepot"],
+			"shell": true
 		}
 	]
 }

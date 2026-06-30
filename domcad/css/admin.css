@@ -54,3 +54,14 @@ body.block-editor-page .editor-block-list__block,
   border-radius: 50%;
   cursor: pointer;
 }
+
+.domcad-gallery-preview {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 850px;
+}

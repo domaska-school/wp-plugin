@@ -18,10 +18,14 @@ class DomCad_Slider_Settings {
 	private function __construct() {
 		// Регистрация своего размера
 		add_action( 'after_setup_theme', array( $this, 'register_custom_image_size' ) );
-
 		add_filter( 'image_size_names_choose', array( $this, 'add_image_sizes' ) );
+		// Регистрация настроек
 		add_action( 'admin_init', array( $this, 'register_setting' ) );
+		// Загрузка стилей и скриптов
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+		// Регистрация страницы в Внешнем виде
+		add_action( 'admin_menu', array( $this, 'setup_theme_admin_menus' ) );
+		add_filter( 'image_resize_dimensions', array( $this, 'image_resize_dimensions' ), 10, 6 );
 	}
 
 	/**
@@ -37,6 +41,161 @@ class DomCad_Slider_Settings {
 	public function add_image_sizes( $sizes ) {
 		$sizes['gallery_image'] = __( 'Slider', 'domcad' );
 		return $sizes;
+	}
+
+	/**
+	 * 
+	 */
+	public function image_resize_dimensions($output, $orig_w, $orig_h, $dest_w, $dest_h, $crop) {
+		return null;
+	}
+
+	/**
+	 * Регистрация страницы в меню «Внешний вид»
+	 */
+	public function setup_theme_admin_menus() {
+		add_submenu_page(
+			// уникальный идентификатор для меню верхнего уровня, к которому будет добавлено подменю.
+			'themes.php',
+			// Тайтл страницы
+			__( "Slider on the main page", "domcad" ),
+			// заголовок, отображаемый в меню (зачастую короткая версия $page_title)
+			__( "Slider", "domcad" ),
+			// минимальные права доступа, требуемые пользователю, чтобы получить доступ к данному меню.
+			'manage_options',
+			// уникальный идентификатор для создаваемого меню.
+			'domcad_gallery_elements',
+			// название функции, которая вызывается для обработки (и представления) данной страницы меню.
+			array( $this, 'theme_front_page_settings' ),
+			// Позиция меню
+			7
+		);
+	}
+
+	/**
+	 * Ресайз изображения
+	 */
+	public function resize_image( $path = "" ) {
+		if($path) {
+			$image = wp_get_image_editor( $path );
+			$size = $image->get_size();
+			$width = $size["width"];
+			$height = $size["height"];
+			$path_info = pathinfo($path);
+			$filename = $path_info["filename"] . "-1200x372" . "." . $path_info["extension"];
+			$tmp = $path_info["dirname"] . "/" . $filename;
+			$url = site_url(str_replace(array($_SERVER['DOCUMENT_ROOT']), '', $tmp));
+			if($width == 1200 && $height == 372) {
+				$url = site_url(str_replace(array($_SERVER['DOCUMENT_ROOT']), '', $path));
+				return array(
+					$url,
+					1200,
+					372,
+					true
+				);
+			} else {
+				//file_put_contents(__DIR__ . "/test.txt", print_r($url, true) . "\n\n", FILE_APPEND);
+				if(!is_file($tmp)) {
+					$result = $image->resize(1200, 372, array(
+						"x_crop_position" => "center",
+						"y_crop_position" => "center"
+					));
+					$image->save($tmp);
+					return array(
+						$url,
+						1200,
+						372,
+						true
+					);
+				} else {
+					return array(
+						$url,
+						1200,
+						372,
+						true
+					);
+				}
+			}
+		} else {
+			wp_admin_notice(
+				// Сообщение Переменная \$path обязательна
+				__("The \$path variable is required", "domcad"),
+				array(
+					// Тип сообщения
+					"type" => "error",
+					// Можно ли закрыть уведомление
+					"dismissible" => true,
+					// id контейнера
+					"id" => "",
+					// Массив CSS классов для html контейнера заметки. Данные классы будут добавлены к классам из списка
+					"additional_classes" => array(
+						"notice",
+						"notice-{type}",
+						"notice-alt",
+						"is-dismissible"
+					),
+					// Оборачивать ли в параграф
+					"paragraph_wrap" => true,
+				)
+			);
+		}
+	}
+
+	/**
+	 * Отображение отдельной страницы настроек
+	 */
+	public function theme_front_page_settings() {
+		$this->enqueue_assets( 'options-general.php' );
+		// проверяем, что пользователь может обновлять настройки
+		if (!current_user_can('manage_options')) {
+			wp_die( __( "You do not have sufficient permissions to access this page." , "domcad" ) );
+		}
+		if(isset($_POST['update_domcad_gallery'])) {
+			$val = intval(esc_attr($_POST['update_domcad_gallery']));
+			if($val) {
+				// Сохранение
+				$ids = isset($_POST['domcad_slider_home']) ? esc_attr($_POST['domcad_slider_home']) : '';
+				$speed = intval(isset($_POST['domcad_slider_autoplay_speed'])  ? esc_attr($_POST['domcad_slider_autoplay_speed']) : '5');
+				$speed = $speed > 0 ? $speed : 5;
+				update_option("domcad_slider_home", $ids);
+				update_option("domcad_slider_autoplay_speed", $speed);
+				wp_admin_notice(
+					// Сообщение
+					__("The settings have been saved successfully!", "domcad"),
+					array(
+						// Тип сообщения
+						"type" => "success",
+						// Можно ли закрыть уведомление
+						"dismissible" => true,
+						// id контейнера
+						"id" => "",
+						// Массив CSS классов для html контейнера заметки. Данные классы будут добавлены к классам из списка
+						"additional_classes" => array(
+							"notice",
+							"notice-{type}",
+							"notice-alt",
+							"is-dismissible"
+						),
+						// Оборачивать ли в параграф
+						"paragraph_wrap" => true,
+					)
+				);
+			}
+		}
+		?>
+		<h1><?= __("Slider settings on the main page", "domcad" );?></h1>
+		<form method="POST" action="">
+			<input type="hidden" name="update_domcad_gallery" value="1" />
+		<?php
+		$this->render_slider_field(true);
+		$this->render_slider_autoplay_speed_field(true);
+		?>
+			<p>
+				<input type="submit" name="" value="<?= __("Save settings", "domcad");?>" class="button-primary"/>
+			</p>
+			<p><?= __('Instructions on how to use', 'domcad');?>: <a href="https://github.com/domaska-school/wp-plugin#плагин-для-сайта" target="_blank">https://github.com/domaska-school/wp-plugin</a></p>
+		</form>
+		<?php
 	}
 
 	/**
@@ -119,7 +278,7 @@ class DomCad_Slider_Settings {
 	/**
 	 * Вывод поля domcad_slider_home
 	 */
-	public function render_slider_field() {
+	public function render_slider_field($type) {
 		$ids      = get_option( 'domcad_slider_home', '' );
 		$images   = array();
 
@@ -132,7 +291,25 @@ class DomCad_Slider_Settings {
 				}
 
 				// Используем правильный размер: 'gallery_image'
-				$thumb = wp_get_attachment_image_src( $at_id, 'gallery_image' );
+				//$thumb = wp_get_attachment_image_src( $at_id, 'gallery_image' );
+				
+				if (has_image_size('gallery_image')) {
+					$thumb = image_get_intermediate_size( $at_id, 'gallery_image' );
+					if(!$thumb) {
+						/**
+						 * Вот здесь нужно сделать принудительный ресайз
+						 */
+						$path = wp_get_original_image_path($at_id);
+						$thumb = $this->resize_image($path);
+					} else {
+						$thumb[0] = $thumb['url'];
+					}
+				} else {
+					/**
+					 * Вот здесь нужно сделать принудительный ресайз
+					 */
+					$thumb = $this->resize_image($path);
+				}
 
 				$post = get_post( $at_id );
 				$title = $post && ! empty( $post->post_title ) ? $post->post_title : $at_id;
@@ -148,6 +325,11 @@ class DomCad_Slider_Settings {
 					'alt' => esc_attr( $alt ),
 				);
 			}
+		}
+		if($type) {
+		?>
+		<h3><?= __( "Select Images", "domcad" ); ?></h3>
+		<?php
 		}
 		?>
 		<div class="domcad-gallery-field-wrapper">
@@ -165,11 +347,17 @@ class DomCad_Slider_Settings {
 				<?php endforeach; ?>
 			</div>
 			<p>
-				<button type="button" id="domcad-gallery_btn" class="button button-secondary">
+				<button type="button" id="domcad-gallery_btn" class="button button-primary">
 					<?= __( 'Select images for the Slider', 'domcad'); ?>
 				</button>
 			</p>
-			<p><?= __('Instructions on how to use', 'domcad');?>: <a href="https://github.com/domaska-school/wp-plugin#плагин-для-сайта" target="_blank">https://github.com/domaska-school/wp-plugin</a>
+			<?php
+			if(!$type) {
+			?>
+			<p><?= __('Instructions on how to use', 'domcad');?>: <a href="https://github.com/domaska-school/wp-plugin#плагин-для-сайта" target="_blank">https://github.com/domaska-school/wp-plugin</a></p>
+			<?php
+			}
+			?>
 		</div>
 		<?php
 	}
@@ -177,9 +365,14 @@ class DomCad_Slider_Settings {
 	/**
 	 * Вывод поля domcad_slider_autoplay_speed
 	 */
-	public function render_slider_autoplay_speed_field () {
+	public function render_slider_autoplay_speed_field ($type) {
 		$value = get_option( 'domcad_slider_autoplay_speed', '1' );
 		$value = $this->sanitize_slider_option_autoplay_speed($value);
+		if($type) {
+		?>
+		<h3><?= __( "Time between slider animations", "domcad" );?></h3>
+		<?php
+		}
 		?>
 		<div class="domcad-gallery-field-autoplay-speed">
 			<input type="number" id="domcad_slider_autoplay_speed" name="domcad_slider_autoplay_speed" value="<?php echo esc_attr( $value ); ?>" min="1" max="100" step="1"> <?= __('Seconds', 'domcad');?>
@@ -194,7 +387,6 @@ class DomCad_Slider_Settings {
 		if ( 'options-general.php' !== $hook ) {
 			return;
 		}
-
 		wp_enqueue_media();
 
 		// Сортировка
