@@ -1,7 +1,7 @@
 {
 	"name": "domcat",
-	"version": "1.3.0",
-	"description": "Не нужно думать зачем.",
+	"version": "1.3.1",
+	"description": "Плагин для сайта Структурное подразделение детский сад ГБОУ СОШ с. Домашка",
 	"main": "Gruntfile.js",
 	"scripts": {
 		"inst": "npm i && npm i -g bower && bower install",

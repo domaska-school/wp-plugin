@@ -11,13 +11,23 @@ module.exports = function(grunt) {
 				"cssmin",
 				"compress"
 			]
-		};
+		},
+		PACK = grunt.file.readJSON('package.json'),
+		banner = `/**
+ * 
+ * ${PACK.description}
+ * Version:     ${PACK.version}
+ * Author:      ${PACK.author}
+ * Last Update: ${grunt.template.today("yyyy-mm-dd")}
+ * 
+ */
+`;
 
 	require('load-grunt-tasks')(grunt);
 
 	grunt.initConfig({
 		globalConfig : gc,
-		pkg : grunt.file.readJSON('package.json'),
+		pkg : PACK,
 		clean: {
 			options: {
 				force: true
@@ -49,6 +59,10 @@ module.exports = function(grunt) {
 				dest: 'domcad/js/jquery.fancybox.js'
 			},
 			main: {
+				options: {
+					separator: "\n",
+					banner: banner,
+				},
 				src: [
 					'bower_components/slick-carousel/slick/slick.js',
 					'src/main.js'
@@ -62,12 +76,20 @@ module.exports = function(grunt) {
 				dest: 'domcad/js/sortable.js'
 			},
 			files: {
+				options: {
+					separator: "\n",
+					banner: banner,
+				},
 				src: [
 					'src/file-ajax.js'
 				],
 				dest: 'domcad/js/file-ajax.js'
 			},
 			option: {
+				options: {
+					separator: "\n",
+					banner: banner,
+				},
 				src: [
 					'src/options.js'
 				],
@@ -88,7 +110,8 @@ module.exports = function(grunt) {
 	  			},
 	  			output: {
 					ascii_only: true
-				}
+				},
+				banner: banner
 			},
 			app: {
 				files: [
@@ -110,6 +133,17 @@ module.exports = function(grunt) {
 						flatten : true,
 						src: [
 							'src/sortable.js',
+						],
+						dest: path.normalize(path.join(__dirname, 'domcad', 'js')),
+						filter: 'isFile',
+						rename: function (dst, src) {
+							return path.normalize(path.join(dst, src.replace('.js', '.min.js')));
+						}
+					},
+					{
+						expand: true,
+						flatten : true,
+						src: [
 							'src/file-ajax.js',
 							'src/options.js'
 						],
@@ -127,20 +161,21 @@ module.exports = function(grunt) {
 				options : {
 					compress: false,
 					ieCompat: false,
+					banner: banner,
 					modifyVars: {
 						"slick-font-path": "../fonts/",
 						"slick-loader-path": "../images/",
 					}
 				},
 				files : {
+					'test/css/admin.css' : [
+						'src/admin.less'
+					],
 					'test/css/main.css' : [
 						'bower_components/slick-carousel/slick/slick.less',
 						'bower_components/slick-carousel/slick/slick-theme.less',
 						'src/main.less'
 					],
-					'test/css/admin.css' : [
-						'src/admin.less'
-					]
 				}
 			}
 		},
@@ -183,7 +218,8 @@ module.exports = function(grunt) {
 		cssmin: {
 			options: {
 				mergeIntoShorthands: false,
-				roundingPrecision: -1
+				roundingPrecision: -1,
+				banner: banner
 			},
 			minify: {
 				files: {
