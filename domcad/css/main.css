@@ -700,6 +700,10 @@ img.emoji {
   position: relative;
 }
 
+.widget_domcad_gallerry_home_widget .carausel {
+  margin-bottom: 0px;
+}
+
 .slick-slider {
   height: 100%;
   width: 100%;
@@ -734,7 +738,7 @@ img.emoji {
 .slick-prev,
 .slick-next {
   z-index: 10;
-  border-radius: 50%;
+  border-radius: 0px;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   top: 0;
   bottom: 0;
@@ -744,6 +748,7 @@ img.emoji {
   -ms-transform: translate(0, 0);
   transform: translate(0, 0);
   transition: text-shadow 0.3s ease, color 0.3s ease;
+  font-size: 0px !important;
 }
 
 .slick-prev:hover,
@@ -753,12 +758,31 @@ img.emoji {
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
 }
 
+.slick-prev::befopre,
+.slick-next::befopre {
+  font-size: 20px !important;
+}
+
 .slick-prev {
   left: 0;
 }
 
 .slick-next {
   right: 0;
+}
+
+body .bvi-body[data-bvi-fontsize] button.slick-next,
+body .bvi-body[data-bvi-fontsize] button.slick-prev {
+  font-size: 0px !important;
+}
+
+body .bvi-body[data-bvi-fontsize] button.slick-next::befopre,
+body .bvi-body[data-bvi-fontsize] button.slick-prev::befopre {
+  font-size: 20px !important;
+}
+
+body .bvi-body .slick-slider-item img {
+  pointer-events: auto;
 }
 
 @media (max-width: 600px) {

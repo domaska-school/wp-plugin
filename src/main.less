@@ -263,7 +263,11 @@ img.emoji {
 	padding-bottom: 31%;
 	position: relative;
 }
-
+.widget_domcad_gallerry_home_widget {
+	.carausel {
+		margin-bottom: 0px;
+	}
+}
 .slick {
 	&-slider {
 		height: 100%;
@@ -303,7 +307,7 @@ img.emoji {
 	&-prev,
 	&-next {
 		z-index: 10;
-		border-radius: 50%;
+		border-radius: 0px;
 		text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 		top: 0;
 		bottom: 0;
@@ -312,9 +316,13 @@ img.emoji {
 		padding: 5px;
 		transform: translate(0, 0);
 		transition: text-shadow .3s ease, color .3s ease;
+		font-size: 0px !important;
 		&:hover,
 		&:focus {
 			text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+		}
+		&::befopre {
+			font-size: 20px !important;
 		}
 	}
 	&-prev {
@@ -322,5 +330,32 @@ img.emoji {
 	}
 	&-next {
 		right: 0;
+	}
+}
+// Чуть обработаем под BVI
+body .bvi-body {
+	&[data-bvi-fontsize] {
+		// Размер шрифта в кнопках
+		button {
+			&.slick {
+				&-next,
+				&-prev {
+					font-size: 0px !important;
+					&::befopre {
+						font-size: 20px !important;
+					}
+				}
+			}
+		}
+	}
+	.slick {
+		&-slider {
+			&-item {
+				// Обработка клика и наведения
+				img {
+					pointer-events: auto;
+				}
+			}
+		}
 	}
 }

@@ -123,6 +123,7 @@ function run_domcad() {
 	
 	//
 	require_once(dirname(__FILE__) . '/DomCad_Slider_Settings.php');
+	require_once(dirname(__FILE__) . '/DomCad_Slider_Widget.php');
 	require_once(dirname(__FILE__) . '/Video.php');
 	require_once(dirname(__FILE__) . '/WpRunClass.php');
 	require_once(dirname(__FILE__) . '/RegisterStyleScript.php');
@@ -132,6 +133,10 @@ function run_domcad() {
 	require_once(dirname(__FILE__) . '/WpEmbededRun.php');
 	require_once(dirname(__FILE__) . '/WpBashBoardWidgets.php');
 	require_once(dirname(__FILE__) . '/DisabledEmoji.php');
+
+	add_action( 'widgets_init', function() {
+	    register_widget( 'DomCad_Slider_Widget' );
+	} );
 	
 }
 

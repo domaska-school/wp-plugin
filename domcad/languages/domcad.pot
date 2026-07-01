@@ -8,7 +8,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"POT-Creation-Date: 2026-06-30T09:22:22.597Z\n"
+"POT-Creation-Date: 2026-07-01T20:21:34.849Z\n"
 "PO-Revision-Date: 2026-MO-DA HO:MI+ZONE\n"
 "Last-Translator: ProjectSoft <projectsoft2009@yandex.ru>\n"
 "Language-Team: ProjectSoft <projectsoft2009@yandex.ru>\n"
@@ -41,60 +41,68 @@ msgstr ""
 msgid "https://github.com/ProjectSoft-STUDIONIONS/"
 msgstr ""
 
-#: DomCad_Slider_Settings.php:41
-#: DomCad_Slider_Settings.php:55
+#: DomCad_Slider_Widget.php:7
+msgid "Slider: Home Page"
+msgstr ""
+
+#: DomCad_Slider_Settings.php:145
+#: DomCad_Slider_Settings.php:167
 msgid "Slider"
 msgstr ""
 
-#: DomCad_Slider_Settings.php:53
-#: DomCad_Slider_Settings.php:142
+#: DomCad_Slider_Settings.php:165
+#: DomCad_Slider_Settings.php:331
 msgid "Slider on the main page"
 msgstr ""
 
-#: DomCad_Slider_Settings.php:74
+#: DomCad_Slider_Settings.php:234
+msgid "The $path variable is required"
+msgstr ""
+
+#: DomCad_Slider_Settings.php:263
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: DomCad_Slider_Settings.php:87
+#: DomCad_Slider_Settings.php:276
 msgid "The settings have been saved successfully!"
 msgstr ""
 
-#: DomCad_Slider_Settings.php:109
+#: DomCad_Slider_Settings.php:298
 msgid "Slider settings on the main page"
 msgstr ""
 
-#: DomCad_Slider_Settings.php:117
+#: DomCad_Slider_Settings.php:306
 msgid "Save settings"
 msgstr ""
 
-#: DomCad_Slider_Settings.php:119
-#: DomCad_Slider_Settings.php:262
+#: DomCad_Slider_Settings.php:308
+#: DomCad_Slider_Settings.php:468
 msgid "Instructions on how to use"
 msgstr ""
 
-#: DomCad_Slider_Settings.php:159
-#: DomCad_Slider_Settings.php:278
+#: DomCad_Slider_Settings.php:348
+#: DomCad_Slider_Settings.php:484
 msgid "Time between slider animations"
 msgstr ""
 
-#: DomCad_Slider_Settings.php:236
+#: DomCad_Slider_Settings.php:442
 msgid "Select Images"
 msgstr ""
 
-#: DomCad_Slider_Settings.php:256
-#: DomCad_Slider_Settings.php:333
+#: DomCad_Slider_Settings.php:462
+#: DomCad_Slider_Settings.php:539
 msgid "Select images for the Slider"
 msgstr ""
 
-#: DomCad_Slider_Settings.php:283
+#: DomCad_Slider_Settings.php:489
 msgid "Seconds"
 msgstr ""
 
-#: DomCad_Slider_Settings.php:334
+#: DomCad_Slider_Settings.php:540
 msgid "Use the selected ones"
 msgstr ""
 
-#: DomCad_Slider_Settings.php:335
+#: DomCad_Slider_Settings.php:541
 msgid "There are no selected files"
 msgstr ""
 

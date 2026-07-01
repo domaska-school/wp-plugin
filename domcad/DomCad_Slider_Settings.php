@@ -8,6 +8,26 @@ class DomCad_Slider_Settings {
 
 	private static $instance = null;
 
+	public $params = array();
+	public $pages = array(
+		// Страница
+		"page_id",
+		// Запись
+		"p",
+		// Ответ в теме
+		"reply",
+		// Тема
+		"topic",
+		// Темы
+		"post_type",
+		// Форум
+		"forum",
+		// Вложения
+		"attachment_id",
+		// Пользователь
+		"bbp_user",
+	);
+
 	public static function get_instance() {
 		if ( null === self::$instance ) {
 			self::$instance = new self();
@@ -16,6 +36,10 @@ class DomCad_Slider_Settings {
 	}
 
 	private function __construct() {
+		// Парсим запрос эта операция на всякий случай. Вдруг потребуется.
+		parse_str($_SERVER['QUERY_STRING'], $this->params);
+		// Фильтруем (определяем откуда запрос)
+		$this->pages = array_filter($this->pages, array($this, 'callbackArray'));
 		// Регистрация своего размера
 		add_action( 'after_setup_theme', array( $this, 'register_custom_image_size' ) );
 		add_filter( 'image_size_names_choose', array( $this, 'add_image_sizes' ) );
@@ -25,7 +49,86 @@ class DomCad_Slider_Settings {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		// Регистрация страницы в Внешнем виде
 		add_action( 'admin_menu', array( $this, 'setup_theme_admin_menus' ) );
-		add_filter( 'image_resize_dimensions', array( $this, 'image_resize_dimensions' ), 10, 6 );
+		// add_filter( 'image_resize_dimensions', array( $this, 'image_resize_dimensions' ), 10, 6 );
+		// Регистрируем do_action
+		/**
+		 * Добавляем для использования в теме Graphene
+		 */
+		add_action( 'graphene_top_content', array( $this, 'doActionRender' ), 10, 0 );
+		/**
+		 * Или собственный
+		 */
+		add_action( 'domcad_slider_content', array( $this, 'doActionRender' ), 10, 0 );
+		/**
+		 * Здесь добавить нужный action если он есть в другой теме
+		 */
+		// ........
+		// Регистрируем shortcode
+		add_shortcode('domcad_slider', array($this, 'doShortCodeRender'));
+
+	}
+
+	/**
+	 * Функция фильтрации массива для функции renderHTML
+	 */
+	public function callbackArray($value) {
+		return isset($this->params[$value]);
+	}
+
+	/**
+	 * Функция рендера HTML самого слайдера
+	 */
+	public function renderHTML($param = false) {
+		/**
+		 * Обрабатываем
+		 * slider_home_images опция должна быть.
+		 */
+		$ids = array_filter(explode(',', get_option( 'domcad_slider_home', '' )), function($str) {
+		    return !!$str;
+		});
+		// $url = explode('?', $_SERVER['REQUEST_URI']);
+		// $url = $url[0];
+		$output = '';
+		// Если это action то $param = true
+		// Если это shortcode, то $param = false
+		$tempParam = false;
+		if(!$param) {
+			// Это при shortcode
+			$tempParam = true;
+		} else {
+			// Если action, то определяем главная ли это страница.
+			// $tempParam = !count($this->pages) && $url == "/";
+			$request_uri = $_SERVER['REQUEST_URI'] ?? '';
+			$tempParam = ($request_uri === '/');
+		}
+		if(count($ids) && $tempParam):
+			$output = '<div class="carausel"><div class="slider slick-slider home">';
+			foreach($ids as $key => $value):
+				$image_url = wp_get_attachment_image_url($value, 'gallery_image');
+				// Если url есть
+				if($image_url):
+					// Получаем заголовок и выводим
+					$title = get_the_title($value);
+					$output .= '<div class="slick-slider-item"><img src="' . esc_url($image_url) . '" alt="' . esc_attr($title) . '" title="' . esc_attr($title) . '"></div>';
+				endif;
+			endforeach;
+			$output .= '</div></div>';
+		endif;
+		return $output;
+	}
+
+	/**
+	 * Вывод для action
+	 */
+	public function doActionRender() {
+		echo $this->renderHTML( true );
+	}
+
+	/**
+	 * Вывод shortcode
+	 */
+	public function doShortCodeRender() {
+		return $this->renderHTML( false );
 	}
 
 	/**
@@ -47,6 +150,7 @@ class DomCad_Slider_Settings {
 	 * 
 	 */
 	public function image_resize_dimensions($output, $orig_w, $orig_h, $dest_w, $dest_h, $crop) {
+		// Обдумываю....
 		return null;
 	}
 
@@ -77,14 +181,18 @@ class DomCad_Slider_Settings {
 	 */
 	public function resize_image( $path = "" ) {
 		if($path) {
+			// Загружаем редактор для картинки
 			$image = wp_get_image_editor( $path );
+			// Получаем размер
 			$size = $image->get_size();
 			$width = $size["width"];
 			$height = $size["height"];
+			// Составляем путь
 			$path_info = pathinfo($path);
 			$filename = $path_info["filename"] . "-1200x372" . "." . $path_info["extension"];
 			$tmp = $path_info["dirname"] . "/" . $filename;
 			$url = site_url(str_replace(array($_SERVER['DOCUMENT_ROOT']), '', $tmp));
+			// Если размеры точные
 			if($width == 1200 && $height == 372) {
 				$url = site_url(str_replace(array($_SERVER['DOCUMENT_ROOT']), '', $path));
 				return array(
@@ -94,13 +202,16 @@ class DomCad_Slider_Settings {
 					true
 				);
 			} else {
-				//file_put_contents(__DIR__ . "/test.txt", print_r($url, true) . "\n\n", FILE_APPEND);
+				// Если размеры не совпадают и изображения нет
 				if(!is_file($tmp)) {
+					// Запускаем ресайз
 					$result = $image->resize(1200, 372, array(
 						"x_crop_position" => "center",
 						"y_crop_position" => "center"
 					));
+					// Сохраняем
 					$image->save($tmp);
+					// Возвращаем
 					return array(
 						$url,
 						1200,
@@ -108,6 +219,7 @@ class DomCad_Slider_Settings {
 						true
 					);
 				} else {
+					// Изображение есть. Возвращаем
 					return array(
 						$url,
 						1200,
@@ -119,7 +231,7 @@ class DomCad_Slider_Settings {
 		} else {
 			wp_admin_notice(
 				// Сообщение Переменная \$path обязательна
-				__("The \$path variable is required", "domcad"),
+				__('The $path variable is required', "domcad"),
 				array(
 					// Тип сообщения
 					"type" => "error",
@@ -292,7 +404,6 @@ class DomCad_Slider_Settings {
 
 				// Используем правильный размер: 'gallery_image'
 				//$thumb = wp_get_attachment_image_src( $at_id, 'gallery_image' );
-				
 				if (has_image_size('gallery_image')) {
 					$thumb = image_get_intermediate_size( $at_id, 'gallery_image' );
 					if(!$thumb) {

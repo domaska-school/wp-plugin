@@ -29,18 +29,6 @@ class WpRunClass {
 		add_filter( 'the_content', array(__CLASS__, 'author'), 25 );
 		add_shortcode('child', array(__CLASS__, 'child'));
 		add_shortcode('childs', array(__CLASS__, 'child'));
-		/**
-		 * Добавляем для использования в теме Graphene
-		 */
-		add_action( 'graphene_top_content', array( __CLASS__, 'slider_function' ), 10, 2 );
-		/**
-		 * Или собственный
-		 */
-		add_action( 'domcad_slider_content', array( __CLASS__, 'slider_function' ), 10, 2 );
-		/**
-		 * Здесь добавить action если он есть в другой теме
-		 */
-		// ........
 	}
 
 	static function author($content) {
@@ -80,33 +68,6 @@ class WpRunClass {
 
 	static function wp_default_editor_filter($r) {
 		return ' ';
-	}
-
-	static function slider_function($atts) {
-		/**
-		 * Обрабатываем
-		 * slider_home_images опция должна быть.
-		 */
-		$ids = array_filter(explode(',', get_option( 'domcad_slider_home', '' )), function($str) {
-		    return !!$str;
-		});
-		parse_str($_SERVER['QUERY_STRING'], $params);
-		$url = explode('?', $_SERVER['REQUEST_URI']);
-		$url = $url[0];
-		$output = '';
-		if(count($ids) && !$params['page_id'] && !$params['p'] && $url == "/"):
-			$output = '<div class="carausel"><div class="slider slick-slider home">';
-			foreach($ids as $key => $value):
-				$image_url = wp_get_attachment_image_url($value, 'gallery_image');
-				// Если url есть
-				if($image_url):
-					$output .= '<div class="slick-slider-item"><img src="' . $image_url . '" alt=""></div>';
-				endif;
-			endforeach;
-			$output .= '</div></div>';
-		endif;
-		echo $output;
-		return '';
 	}
 }
 

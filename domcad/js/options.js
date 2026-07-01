@@ -1,20 +1,19 @@
 (function($) {
 	// Обработка 
 	$(document).ready(function() {
-		var frame = null,
-			container = $("#domcad-gallery-order")[0];
-		var sortable = new Sortable(container, {
-			animation: 300,
-			onEnd: function(evt) {
-				var order = [];
-				var items = container.querySelectorAll('.domcad-img-tag');
-				items.forEach(function(el) {
-					var id = parseInt(el.getAttribute('data-id'), 10);
-					if (!isNaN(id)) order.push(id);
-				});
-				$('#domcad_slider_home').val(order.join(','));
-			}
-		});
+		var container = $("#domcad-gallery-order")[0],
+			sortable = new Sortable(container, {
+				animation: 300,
+				onEnd: function(evt) {
+					var order = [];
+					var items = container.querySelectorAll('.domcad-img-tag');
+					items.forEach(function(el) {
+						var id = parseInt(el.getAttribute('data-id'), 10);
+						if (!isNaN(id)) order.push(id);
+					});
+					$('#domcad_slider_home').val(order.join(','));
+				}
+			});
 		// Клик по кнопке выбора 
 		$('#domcad-gallery_btn').on('click', function(e) {
 			e.preventDefault();
@@ -22,9 +21,8 @@
 				.val()
 				.split(',')
 				.filter(w => w.length > 0)
-				.map(Number);
-			// Открытие окна выбора изображений
-			if (!frame) {
+				.map(Number),
+				// Фрейм wp.media
 				frame = wp.media({
 					title: domcadTranslations.title,
 					button: {
@@ -36,26 +34,28 @@
 						type: 'image'
 					},
 				});
-				frame.on('open', function() {
-					var selection = frame.state().get('selection');
-					selectedIds.forEach(function(id) {
-						var attachment = wp.media.attachment(id);
-						if (attachment && attachment.get('id')) {
-						    selection.add([attachment]);
-						}
-					});
+			// Событие открытия
+			frame.on('open', function() {
+				var selection = frame.state().get('selection');
+				selectedIds.forEach(function(id) {
+					var attachment = wp.media.attachment(id);
+					if (attachment && attachment.get('id')) {
+					    selection.add([attachment]);
+					}
 				});
-				frame.on('select', function() {
-					var selection = frame.state().get('selection').map(function(attachment) {
-						return attachment.toJSON();
-					});
-					var ids = selection.map(function(img) {
-						return img.id;
-					}).join(',');
-					$('#domcad_slider_home').val(ids);
-					updatePreview(selection);
+			});
+			// Событие выбора
+			frame.on('select', function() {
+				var selection = frame.state().get('selection').map(function(attachment) {
+					return attachment.toJSON();
 				});
-			}
+				var ids = selection.map(function(img) {
+					return img.id;
+				}).join(',');
+				$('#domcad_slider_home').val(ids);
+				// Обновление просмотра
+				updatePreview(selection);
+			});
 			frame.open();
 		});
 		// удаление отдельного изображения
@@ -78,14 +78,15 @@
 				var $span = $('<span>')
 					.addClass('domcad-img-tag')
 					.attr('data-id', att.id);
+				console.log(att);
 				// Получаем миниатюры
 				if (att.sizes) {
 					let url = att.sizes.gallery_image ? att.sizes.gallery_image.url : att.sizes.full.url;
 					$span.append(
 						$('<img>')
 							.attr('src', url)
-							.attr('alt', att.alt ? att.alt : att.id)
-							.attr('title', att.id)
+							.attr('alt', att.alt ? att.alt : (att.title ? att.title : at.id))
+							.attr('title', att.title ? att.title : at.id)
 					);
 				} else {
 					// запасной вариант, если миниатюры нет

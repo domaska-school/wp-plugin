@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: СП ДС ГБОУ СОШ с. Домашка 1.3.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugins/domcad\n"
-"POT-Creation-Date: 2026-06-30T09:22:22.597Z\n"
-"PO-Revision-Date: 2026-06-30 13:24+0400\n"
+"POT-Creation-Date: 2026-07-01T20:12:09.424Z\n"
+"PO-Revision-Date: 2026-07-02 00:15+0400\n"
 "Last-Translator: ProjectSoft <projectsoft2009@yandex.ru>\n"
 "Language-Team: ProjectSoft <projectsoft2009@yandex.ru>\n"
 "Language: ru\n"
@@ -44,55 +44,63 @@ msgstr "ProjectSoft"
 msgid "https://github.com/ProjectSoft-STUDIONIONS/"
 msgstr "https://github.com/ProjectSoft-STUDIONIONS/"
 
-#: DomCad_Slider_Settings.php:41 DomCad_Slider_Settings.php:55
+#: DomCad_Slider_Widget.php:7
+msgid "Slider: Home Page"
+msgstr "Слайдер: Главная"
+
+#: DomCad_Slider_Settings.php:145 DomCad_Slider_Settings.php:167
 msgid "Slider"
 msgstr "Слайдер"
 
-#: DomCad_Slider_Settings.php:53 DomCad_Slider_Settings.php:142
+#: DomCad_Slider_Settings.php:165 DomCad_Slider_Settings.php:331
 msgid "Slider on the main page"
 msgstr "Слайдер на главной странице"
 
-#: DomCad_Slider_Settings.php:74
+#: DomCad_Slider_Settings.php:234
+msgid "The $path variable is required"
+msgstr "Требуется переменная $path"
+
+#: DomCad_Slider_Settings.php:263
 msgid "You do not have sufficient permissions to access this page."
 msgstr "У вас недостаточно прав для доступа к этой странице."
 
-#: DomCad_Slider_Settings.php:87
+#: DomCad_Slider_Settings.php:276
 msgid "The settings have been saved successfully!"
 msgstr "Настройки успешно сохранены!"
 
-#: DomCad_Slider_Settings.php:109
+#: DomCad_Slider_Settings.php:298
 msgid "Slider settings on the main page"
 msgstr "Настройки Слайдера на главной странице"
 
-#: DomCad_Slider_Settings.php:117
+#: DomCad_Slider_Settings.php:306
 msgid "Save settings"
 msgstr "Сохранить настройки"
 
-#: DomCad_Slider_Settings.php:119 DomCad_Slider_Settings.php:262
+#: DomCad_Slider_Settings.php:308 DomCad_Slider_Settings.php:468
 msgid "Instructions on how to use"
 msgstr "Инструкция как пользоваться"
 
-#: DomCad_Slider_Settings.php:159 DomCad_Slider_Settings.php:278
+#: DomCad_Slider_Settings.php:348 DomCad_Slider_Settings.php:484
 msgid "Time between slider animations"
 msgstr "Время между анимации слайдеров"
 
-#: DomCad_Slider_Settings.php:236
+#: DomCad_Slider_Settings.php:442
 msgid "Select Images"
 msgstr "Выбрать Изображения"
 
-#: DomCad_Slider_Settings.php:256 DomCad_Slider_Settings.php:333
+#: DomCad_Slider_Settings.php:462 DomCad_Slider_Settings.php:539
 msgid "Select images for the Slider"
 msgstr "Выбрать изображения для Слайдера"
 
-#: DomCad_Slider_Settings.php:283
+#: DomCad_Slider_Settings.php:489
 msgid "Seconds"
 msgstr "Секунд"
 
-#: DomCad_Slider_Settings.php:334
+#: DomCad_Slider_Settings.php:540
 msgid "Use the selected ones"
 msgstr "Использовать выбранные"
 
-#: DomCad_Slider_Settings.php:335
+#: DomCad_Slider_Settings.php:541
 msgid "There are no selected files"
 msgstr "Нет выбранных файлов"
 
