@@ -81,6 +81,9 @@ function domcad_admin_footer ($text) {
 	return $text . implode( ' • ', $footer_text);
 }
 
+function more_a_link( $more_link ) {
+	return '<div class="text-right"><a href="' . get_permalink() . '" class="btn btn-more">Подробнее</a></div>';
+}
 
 function run_domcad() {
 	load_plugin_textdomain( 'domcad', false, basename(dirname(__FILE__)).'/languages/' );
@@ -120,7 +123,7 @@ function run_domcad() {
 		remove_filter('comment_text_rss', 'wp_staticize_emoji');
 	});
 	add_filter( 'the_content_more_link', '__return_empty_string' );
-	
+	add_filter('the_content_more_link', 'more_a_link' );
 	//
 	require_once(dirname(__FILE__) . '/DomCad_Slider_Settings.php');
 	require_once(dirname(__FILE__) . '/DomCad_Slider_Widget.php');
